@@ -1,5 +1,43 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
+\documentclass{edm_template}
+
 \begin{document}
-(Type your content here.)
+
+\title{Using Big Data to Sharpen Design-Based Inference in A/B Tests}
+
+\numberofauthors{4} 
+\author{
+% 1st. author
+\alignauthor Anthony Botelho\\
+       \affaddr{Worcester Polytechnic Institute}
+       \affaddr{100 Institute Rd}\\
+       \affaddr{Worcester, MA 01609}\\
+       \email{abotelho@wpi.edu}
+% 2nd. author
+\alignauthor Adam C Sales\\
+       \affaddr{University of Texas at Austin}\\
+       \affaddr{536C George I. S\'{a}nchez Building}\\
+       \affaddr{Austin, TX 78705}\\
+       \email{asales@utexas.edu}
+% 3rd. author
+\alignauthor Thanaporn Patikorn\\
+\affaddr{Worcester Polytechnic Institute}
+       \affaddr{100 Institute Rd}\\
+       \affaddr{Worcester, MA 01609}\\
+       \email{tpatikorn@wpi.edu}
+\and  % use '\and' if you need 'another row' of author names
+% 4th. author
+\alignauthor Neil T. Heffernan\\
+\affaddr{Worcester Polytechnic Institute}
+       \affaddr{100 Institute Rd}\\
+       \affaddr{Worcester, MA 01609}\\
+       \email{nth@wpi.edu}
+}
+
+\maketitle
+\begin{abstract}
+Randomized A/B tests in educational software are not run in a vacuum: often, reams of historical data are available alongside the data from a randomized trial. This paper proposes a method to use this historical data--often high-dimensional and longitudinal--to improve causal estimates from A/B tests. The method proceeds in two steps: first, fit a machine learning model to the historical data predicting students' outcomes as a function of their covariates. Then, use that model to predict the outcomes of the randomized students in the A/B test. Finally, use design-based methods to estimate the treatment effect in the A/B test, using prediction errors in place of outcomes. This method retains all of the advantages of design-based inference, while, under certain conditions, yielding more precise estimators. This paper will give a theoretical condition under which the method improves precision, and demonstrates it using a deep learning algorithm to help estimate effects in a set of experiments run inside ASSISTments.
+\end{abstract}
+
+
+
 \end{document}
