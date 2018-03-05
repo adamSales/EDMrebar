@@ -1,5 +1,15 @@
 \documentclass{edm_template}
 
+%\usepackage{amsthm,amsmath,amsfonts}
+\usepackage{bm}
+
+\newcommand{\yti}{y_{Ti}}
+\newcommand{\yci}{y_{Ci}}
+\newcommand{\yhati}{\hat{y}_{Ci}}
+\newcommand{\yhat}{\hat{y}_C}
+\newcommand{\tauhat}{\hat{\tau}}
+
+
 \begin{document}
 
 \title{Using Big Data to Sharpen Design-Based Inference in A/B Tests}
@@ -38,6 +48,46 @@
 Randomized A/B tests in educational software are not run in a vacuum: often, reams of historical data are available alongside the data from a randomized trial. This paper proposes a method to use this historical data--often high-dimensional and longitudinal--to improve causal estimates from A/B tests. The method proceeds in two steps: first, fit a machine learning model to the historical data predicting students' outcomes as a function of their covariates. Then, use that model to predict the outcomes of the randomized students in the A/B test. Finally, use design-based methods to estimate the treatment effect in the A/B test, using prediction errors in place of outcomes. This method retains all of the advantages of design-based inference, while, under certain conditions, yielding more precise estimators. This paper will give a theoretical condition under which the method improves precision, and demonstrates it using a deep learning algorithm to help estimate effects in a set of experiments run inside ASSISTments.
 \end{abstract}
 
+\section{Introduction}
+(Adam)
+
+\section{Data: 22 Experiments and More}
+(March and Anthony)
+
+\section{Rebar}
+\subsection{Average Treatment Effects in Experiments}
+The effect of an intervention $Z$ on an outcome $Y$ is a matter of counterfactuals: how would $Y$ have been different had $Z$ been different? 
+To formalize, following \citeN{neyman} and \citeN{rubin}, let $\yci$ be the value of $Y$ subject $i$ would experience if assigned to the control condition and $\yti$ be the value of $Y$ he or she would experience if assigned to the treatment condition. These are called ``potential outcomes.'' The outcome actually observed, $Y_i=Z_i\yti+(1-Z_i)\yci$, is $\yti$ if $i$ is assigned to treatment and $\yci$ if $i$ is assigned to control.\footnote{This notation implicitly assumes the ``stable unit value treatment assignment'' \cite{sutva}, that treatment assignment is well defined and one subject's treatment assignment does not affect other subjects' outcomes.} The treatment effect for $i$ would be $\tau_i\equiv \yti-\yci$. Since for each subject only one of $\yti$ or $\yci$ is ever actually observed, $\tau_i$ is, in general, unknowable. However, aggregate quantities such as the ``sample average treatment effect'' (ATE), $\bar{y}_T-\bar{y}_C$ may be estimated in experiments. Here, $\bar{y}_T$ is the average potential outcome under treatment for all subjects in the experiment (treatment and control), and $\bar{y}_C$ is the average of $y_C$ for all subjects.
+If $Z$ is randomized, then the treatment group is a random sample of all experimental subjects, and $\bar{Y}_{Z=1}$, the average observed outcome for treated subjects, is an unbiased estimate of $\bar{y}_T$, the average of $y_T$ over all subjects and $\bar{Y}_{Z=0}$ unbiasedly estimates $\bar{y}_C$. Then their difference, 
+\begin{equation*}
+\tauhat=\bar{Y}_{Z=1}-\bar{Y}_{Z=0}
+\end{equation*}
+is an unbiased estimate of the ATE. 
+Perhaps surprisingly, the standard error for $\tauhat$ is not identified; however, a popular conservative bound \cite{neyman} is
+\begin{equation}
+Var(\tauhat)=\frac{S^2(y_T)}{n_T}+\frac{S^2(y_C)}{n_C}
+\end{equation}
+In theory, the variance of $\tauhat$ is
+\begin{equation*}
+Var{\tauhat}=\frac{S^2(y_T)}{n_T}+\frac{S^2(y_C)}{n_C}-\frac{S^2(\tau)}{n}
+\end{equation*}
+where $n_T$ is the number of subjects assigned to treatment, $n_C$ is the number assigned to control, and $n=n_T+n_C$. $S^2(y_T)$ is the sample variance of $y_T$, or $\sum (y_T-\bar{y}_T)^2/(n-1)$, $S^2(y_C)$ is the sample variance of $y_C$, and $S^2(\tau)$ is the sample variance of the individual treatment effects, $\yti-\yci$. 
+The sample variances of the potential outcomes, $S^2(y_T)$ and $S^2(y_C)$, can be estimated without bias using the observed outcomes, as $S^2(Y_{Z=1})$ and $S^2(Y_{Z=0})$.
+However, since individual treatment effects are unknown, their variance is, too. 
 
 
+%% var(y1bar-y0bar|nt,nc)=var(y1bar)+var(y0bar)-2cov(y1bar,y2bar)
+%% cov(y1bar,y0bar)=1/nt1/nc cov(sum(ytZ),sum(yc(1-z)))= 
+%% 1/nt1/nc sum cov(ytiZi,yci(1-Zi))=-1/nt1/nc sum(cov(yti,yci))
+\section{Deep Learning to Predict Completion}
+(Anthony)
+
+\section{Results}
+(Adam)
+
+\section{Discussion}
+(Adam)
+
+\bibliographystyle{abbrv}
+\bibliography{citations}  
 \end{document}
